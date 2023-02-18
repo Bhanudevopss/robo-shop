@@ -22,5 +22,4 @@ systemctl enable nginx
 echo -e "\e[35mStarting nginx\e[0m"
 systemctl restart nginx
 
-# Roboshop config is not copied
 ## If any command is errored or failed, we need to stop the script
