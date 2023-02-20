@@ -9,7 +9,10 @@ yum install nodejs -y &>>${log_file}
 status_check $?
 
 print_head "Create Roboshop User"
-useradd roboshop &>>${log_file}
+id roboshop &>>${log_file}
+if [ $? -ne 0 ]; then
+ useradd roboshop &>>${log_file}
+fi
 status_check $?
 
 print_head "Create Application Directory"
@@ -22,8 +25,8 @@ status_check $?
 
 print_head "Downloading App Content"
 curl -L -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>${log_file}
-cd /app
 status_check $?
+cd /app
 
 print_head "Extracting App Content"
 unzip /tmp/catalogue.zip &>>${log_file}
