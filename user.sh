@@ -65,4 +65,3 @@ status_check $?
 print_head "Load Schema"
 mongo --host mongodb.devopswithbhanu.online </app/schema/user.js &>>${log_file}
 status_check $?
-
