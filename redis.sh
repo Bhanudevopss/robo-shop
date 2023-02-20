@@ -17,23 +17,23 @@ status_check() {
 }
 
 
-print_head"Installing Redis RPM"
+print_head "Installing Redis RPM"
 yum install https://rpms.remirepo.net/enterprise/remi-release-8.rpm -y &>>{log_file}
 status_check $?
 
-print_head"Enabling Redis 6.2"
+print_head "Enabling Redis 6.2"
 dnf module enable redis:remi-6.2 -y &>>{log_file}
 status_check $?
 
-print_head"Installing Redis 6.2"
+print_head "Installing Redis 6.2"
 yum install redis -y &>>{log_file}
 status_check $?
 
-print_head"Enable Redis"
+print_head "Enable Redis"
 systemctl enable redis &>>{log_file}
 status_check $?
 
-print_head"Restart Redis"
+print_head "Restart Redis"
 systemctl restart redis &>>{log_file}
 status_check $?
 
