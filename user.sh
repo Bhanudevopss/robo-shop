@@ -22,7 +22,7 @@ fi
 status_check $?
 
 print_head "Delete Old Content"
-rm -rf /app/* &>>&{log_file}
+rm -rf /app/* &>>${log_file}
 status_check $?
 
 print_head "Downloading App Content"
