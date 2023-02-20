@@ -12,7 +12,7 @@ print_head "Install Redis"
 yum install redis -y &>>${log_file}
 status_check $?
 
-print_head "Install Redis"
+print_head "Update Redis Listen Address"
 sed -i -e 's/127.0.0.1/0.0.0.0' /etc/redis.conf /etc/redis/redis.conf &>>${log_file}
 status_check $?
 
