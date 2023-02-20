@@ -1,20 +1,4 @@
-code_dir=$(pwd)
-log_file=/tmp/roboshop.log
-rm -f ${log_file}
-
-print_head() {
-  echo -e "\e[36m$1\e[0m"
-}
-
-status_check() {
-  if [ $1 -eq 0 ]; then
-    echo SUCCESS
-  else
-    echo FAILURE
-    echo
-    exit 1
-  fi
-}
+source common.sh
 
 print_head "Configure NodeJS Repo"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${log_file}
@@ -25,11 +9,16 @@ yum install nodejs -y &>>${log_file}
 status_check $?
 
 print_head "Create Roboshop User"
-useradd roboshop &>>${log_file}
+id roboshop &>>${log_file}
+  if [ $? -ne 0 ]; then
+    useradd roboshop &>>${log_file}
+  fi
 status_check $?
 
 print_head "Create Application Directory"
-mkdir /app &>>${log_file}
+if [ ! -d /app ]; then
+  mkdir /app &>>${log_file}
+fi
 status_check $?
 
 print_head "Delete Old Content"
@@ -50,7 +39,7 @@ npm install &>>${log_file}
 status_check $?
 
 print_head "Copy SystemD Service File"
-cp /configs/user.service /etc/systemd/system/user.service &>>${log_file}
+cp ${code_dir}/configs/user.service /etc/systemd/system/user.service &>>${log_file}
 status_check $?
 
 print_head "Reload SystemD"
@@ -66,7 +55,7 @@ systemctl restart user &>>${log_file}
 status_check $?
 
 print_head "Copy MongoDB Repo File"
-cp /configs/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
+cp ${code_dir}/configs/mongodb.repo /etc/yum.repos.d/mongo.repo &>>${log_file}
 status_check $?
 
 print_head "Install Mongo Client"
