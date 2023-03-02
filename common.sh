@@ -27,7 +27,7 @@ schema_setup() {
     status_check $?
 
     print_head "Load Schema"
-    mongo --host mongodb.devopswithbhanu.online </app/schema/${component}.js &>>${log_file}
+    mongo --host mongodb-dev.devopswithbhanu.online </app/schema/${component}.js &>>${log_file}
     status_check $?
   elif [ "${schema_type}" == "mysql" ]; then
     print_head "Install MySQL Client"
@@ -35,7 +35,7 @@ schema_setup() {
     status_check $?
 
     print_head "Load Schema"
-    mysql -h mysql.devopswithbhanu.online -uroot -p${mysql_root_password} < /app/schema/${component}.sql &>>${log_file}
+    mysql -h mysql-dev.devopswithbhanu.online -uroot -p${mysql_root_password} < /app/schema/${component}.sql &>>${log_file}
     status_check $?
   fi
 }
